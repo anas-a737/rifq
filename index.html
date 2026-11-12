@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10251f"><meta name="description" content="رِفْق — نحو حياة أكثر انضباطاً، وقلب أكثر قرباً من الله">
+<link rel="manifest" href="manifest.webmanifest"><title>رِفْق | RIFQ</title>
+<style>
+:root{--bg:#0b1713;--panel:#14251f;--panel2:#1b3028;--gold:#d8b66d;--green:#69a987;--text:#f4f1e8;--muted:#aebbb2;--line:#2a4338}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% -10%,#254637,transparent 34%),var(--bg);color:var(--text);font-family:system-ui,Tahoma,Arial,sans-serif;line-height:1.65}
+header,main{max-width:1000px;margin:auto}header{padding:22px 16px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;gap:12px;align-items:center}.logo{width:48px;height:48px;border:1px solid var(--gold);border-radius:16px;display:grid;place-items:center;color:var(--gold);font-size:25px}h1{font-size:24px;margin:0}.tag{font-size:12px;color:var(--muted);margin:0}.date{font-size:12px;color:var(--gold)}
+main{padding:0 14px 105px}.hero,.card{border:1px solid var(--line);border-radius:20px;background:var(--panel);padding:17px;margin-bottom:14px}.hero{background:linear-gradient(130deg,#1d3c2f,#14251f)}.hero h2{margin:3px 0;font-size:22px}.muted{color:var(--muted);font-size:13px}.gold{color:var(--gold)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.wide{grid-column:1/-1}.card h3{margin:0 0 10px;font-size:17px}.bar{height:9px;background:#09120f;border-radius:20px;overflow:hidden;margin-top:8px}.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold))}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}.tasks{display:grid;gap:8px}.task{display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px solid #294237;background:#0e1c16;border-radius:12px}.task input{accent-color:var(--green);width:18px;height:18px}.task.done span{text-decoration:line-through;color:#82948a}
+button,input,textarea,select{font:inherit}button{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:9px 12px;cursor:pointer}button.primary{background:var(--green);color:#07150d;border-color:var(--green);font-weight:700}button.voice{border-color:var(--gold);color:var(--gold)}input[type=text],textarea,select{width:100%;padding:10px;background:#0a1712;border:1px solid var(--line);border-radius:11px;color:var(--text);margin:6px 0}label{font-size:13px;color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.hadith{font-size:19px;line-height:1.9}.source{font-size:12px;color:var(--gold)}.notice{background:#1c3027;border-right:3px solid var(--gold);padding:9px 11px;border-radius:9px;color:var(--muted);font-size:12px;margin-top:10px}
+.page{display:none}.page.active{display:block}.nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:5px;background:#0b1512ee;border-top:1px solid var(--line);padding:8px 5px calc(8px + env(safe-area-inset-bottom));z-index:4}.nav button{background:transparent;border:0;color:var(--muted);font-size:12px;min-width:60px;padding:6px}.nav button.active{color:var(--gold);background:#1b3028}.pill{font-size:11px;border:1px solid var(--line);padding:3px 8px;border-radius:30px;color:var(--muted)}
+footer{text-align:center;color:#72857a;font-size:11px;padding:20px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.date{max-width:95px;text-align:left}}
+</style></head>
+<body>
+<header><div class="brand"><div class="logo">ر</div><div><h1>رِفْق <span class="gold">| RIFQ</span></h1><p class="tag">نحو حياة أكثر انضباطاً، وقلب أكثر قرباً من الله</p></div></div><div class="date" id="date"></div></header>
+<main>
+<section class="page active" id="today">
+ <div class="hero"><div class="row"><div><span class="gold">مساحة يومك</span><h2>خطوة ثابتة كل يوم 🌿</h2><p class="muted">ابدأ بما تستطيع، واستعن بالله.</p></div><span class="pill">نسخة أولية 1.0</span></div><div class="row"><small class="muted">إنجاز اليوم</small><strong id="pct">0%</strong></div><div class="bar"><span id="bar"></span></div></div>
+ <div class="grid">
+  <article class="card wide"><div class="row"><h3>🎙️ رفيق — المساعد الصوتي</h3><span class="pill" id="voiceStatus">جاهز</span></div><p class="muted">اضغط الميكروفون وجرّب: «ما مهامي؟» أو «افتح عبادتي» أو «سجل أني قرأت القرآن».</p><div class="actions"><button class="voice" id="mic">🎤 تحدث مع رفيق</button><button id="sayTasks">🔊 اقرأ مهامي</button><button id="stopVoice">إيقاف الصوت</button></div><p class="muted" id="voiceText" aria-live="polite"></p><div class="notice">التعرف الصوتي يعتمد على دعم المتصفح والإنترنت في بعض الأجهزة. لا يعمل التطبيق باستماع دائم في الخلفية.</div></article>
+  <article class="card wide"><div class="row"><h3>📖 حديث اليوم</h3><span class="pill">حديث صحيح</span></div><div class="hadith" id="hadith"></div><p class="source" id="source"></p><p class="muted" id="meaning"></p><div class="actions"><button class="primary" id="memorize">سجل أنني حفظته ✓</button><button id="nextHadith">حديث آخر</button></div></article>
+  <article class="card"><h3>🕌 عبادتي</h3><div class="tasks" id="worship"></div></article>
+  <article class="card"><h3>📅 مهام اليوم</h3><div class="tasks" id="daily"></div><div class="actions"><input type="text" id="taskInput" placeholder="أضف مهمة جديدة"><button class="primary" id="addTask">إضافة</button></div></article>
+  <article class="card"><h3>🎯 تطويري — 45 دقيقة</h3><div class="tasks" id="growth"></div><p class="muted">تعلم فكرة، ثم طبّقها. لا تجعل الاستماع بديلاً عن العمل.</p></article>
+  <article class="card"><h3>💪 صحتي</h3><div class="tasks" id="health"></div><p class="muted">التمرين المستهدف بعد العصر، قرابة الرابعة.</p></article>
+ </div>
+</section>
+<section class="page" id="worshipPage"><article class="card"><h3>🕌 عبادتي</h3><p class="muted">متابعة شخصية للتذكير والاستمرار، وليست حكماً على قبول العبادة.</p><div class="tasks" id="worship2"></div><hr style="border-color:var(--line)"><h3>ورد القرآن</h3><p class="muted">الهدف اليومي: صفحة ونصف.</p><label>عدد الصفحات المقروءة اليوم</label><input type="text" id="pages" placeholder="مثلاً 1.5"><button class="primary" id="savePages">حفظ التقدم</button><p class="muted" id="pagesMsg"></p></article></section>
+<section class="page" id="growthPage"><article class="card"><h3>🧭 أكاديمية رِفْق</h3><p class="muted">45 دقيقة: 15 دقيقة إدارة، 15 دقيقة إنجليزية، 15 دقيقة بودكاست أو تطوير شخصية.</p><div class="tasks" id="growth2"></div><h3 style="margin-top:18px">تطبيق إداري اليوم</h3><p>عامل يتأخر عن بداية دوامه بشكل متكرر. كيف ستفهم السبب وتتفق معه على حل واضح؟</p><textarea id="reflection" rows="4" placeholder="اكتب خطتك العملية..."></textarea><button class="primary" id="saveReflection">حفظ الإجابة</button><div class="notice">المسارات: الإدارة والقيادة، الإنجليزية (محادثة وترجمة)، تقوية الشخصية، والثقة بالله والتخلص من العادات السيئة.</div></article></section>
+<section class="page" id="healthPage"><article class="card"><h3>💪 صحتي</h3><div class="tasks" id="health2"></div><p class="muted">يمكن تعديل المهام الرياضية حسب جدول التمرين والراحة.</p></article></section>
+<section class="page" id="settingsPage"><article class="card"><h3>⚙️ الإعدادات والنسخ الاحتياطي</h3><label>موعد النوم المعتاد</label><input type="text" id="sleep" value="9:30 – 10:30 مساءً"><label>موعد الاستيقاظ</label><input type="text" id="wake" value="عند أذان الفجر أو بعده بقليل"><label>طبيعة العمل</label><input type="text" id="work" value="عمل ليلي في الشركة، مع الاستيقاظ عند الحاجة"><div class="actions"><button class="primary" id="saveSettings">حفظ</button><button id="export">تصدير نسخة احتياطية</button><label for="import" style="border:1px solid var(--line);padding:9px 12px;border-radius:12px;cursor:pointer">استيراد نسخة</label><input id="import" type="file" accept="application/json" hidden></div><div class="notice">البيانات محفوظة محلياً على هذا الجهاز. المزامنة بين الأجهزة والتنبيهات الفعلية ومواقيت الصلاة التلقائية ستكون مراحل لاحقة. لا تحذف بيانات المتصفح قبل تصدير نسخة احتياطية.</div></article></section>
+<footer>رِفْق — القليل الدائم خير من الكثير المنقطع.</footer>
+</main>
+<nav class="nav"><button class="active" data-page="today">⌂<br>يومي</button><button data-page="worshipPage">☪<br>عبادتي</button><button data-page="growthPage">✦<br>تطويري</button><button data-page="healthPage">♡<br>صحتي</button><button data-page="settingsPage">⚙<br>الإعدادات</button></nav>
+<script>
+const KEY='rifq-v1',day=new Date().toLocaleDateString('en-CA');
+const base=[
+{id:'fajr',t:'صلاة الفجر',g:'worship'},{id:'quran',t:'قراءة صفحة ونصف من القرآن',g:'worship'},{id:'adhkar',t:'الأذكار — 8 دقائق',g:'worship'},{id:'hadith',t:'حفظ حديث اليوم',g:'worship'},
+{id:'admin',t:'15 دقيقة: الإدارة والتنظيم العملي',g:'growth'},{id:'english',t:'15 دقيقة: الإنجليزية (محادثة وترجمة)',g:'growth'},{id:'podcast',t:'15 دقيقة: بودكاست + فكرة عملية',g:'growth'},
+{id:'gym',t:'التمرين أو نشاط بدني حسب الجدول',g:'health'},{id:'water',t:'متابعة شرب الماء',g:'health'}];
+const hs=[
+{t:'إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى.',s:'صحيح البخاري (1)، وصحيح مسلم (1907).',m:'جدّد نيتك واجعل عملك نافعاً ومخلصاً.'},
+{t:'لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.',s:'صحيح البخاري (13)، وصحيح مسلم (45).',m:'تمنَّ للناس الخير كما تتمناه لنفسك.'},
+{t:'من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت.',s:'صحيح البخاري (6018)، وصحيح مسلم (47).',m:'اختر الكلمة النافعة أو الصمت.'},
+{t:'يسروا ولا تعسروا، وبشروا ولا تنفروا.',s:'صحيح البخاري (69)، وصحيح مسلم (1734).',m:'اجعل الرفق والتيسير أصلاً في تعاملك.'},
+{t:'الكلمة الطيبة صدقة.',s:'صحيح البخاري (2989)، وصحيح مسلم (1009).',m:'ابدأ اليوم بكلمة طيبة.'}];
+let d={};try{d=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+if(d.day!==day){d={day,tasks:base.map(x=>({...x,done:false})),extra:[],quran:'',reflection:'',hadithDone:false};}
+if(!d.tasks)d.tasks=base.map(x=>({...x,done:false}));if(!d.extra)d.extra=[];
+let hi=Math.floor(Date.now()/86400000)%hs.length;
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function persist(){localStorage.setItem(KEY,JSON.stringify(d));render()}
+function list(id,g){let a=[...d.tasks.filter(x=>x.g===g),...(g==='daily'?d.extra:[])];$(id).innerHTML=a.map(x=>`<div class="task ${x.done?'done':''}"><input type="checkbox" data-id="${x.id}" ${x.done?'checked':''}><span>${esc(x.t)}</span></div>`).join('')||'<p class="muted">لا توجد مهام.</p>'}
+function render(){['worship','worship2'].forEach(x=>list(x,'worship'));['growth','growth2'].forEach(x=>list(x,'growth'));['health','health2'].forEach(x=>list(x,'health'));list('daily','daily');let all=[...d.tasks,...d.extra],n=all.filter(x=>x.done).length,p=Math.round(n/all.length*100);$('pct').textContent=p+'%';$('bar').style.width=p+'%';$('hadith').textContent=hs[hi].t;$('source').textContent=hs[hi].s;$('meaning').textContent='الفائدة العملية: '+hs[hi].m;$('memorize').textContent=d.hadithDone?'تم تسجيل الحفظ ✓':'سجل أنني حفظته ✓';$('pages').value=d.quran||'';$('pagesMsg').textContent=d.quran?'تم تسجيل '+d.quran+' صفحة.':'';$('reflection').value=d.reflection||''}
+$('date').textContent=new Date().toLocaleDateString('ar',{weekday:'long',day:'numeric',month:'long'});
+document.addEventListener('change',e=>{if(e.target.matches('[data-id]')){let x=[...d.tasks,...d.extra].find(t=>t.id===e.target.dataset.id);if(x){x.done=e.target.checked;if(x.id==='hadith')d.hadithDone=x.done;persist()}}});
+$('addTask').onclick=()=>{let t=$('taskInput').value.trim();if(!t)return;d.extra.push({id:'u'+Date.now(),t,g:'daily',done:false});$('taskInput').value='';persist()};
+$('memorize').onclick=()=>{d.hadithDone=!d.hadithDone;let x=d.tasks.find(t=>t.id==='hadith');if(x)x.done=d.hadithDone;persist()};
+$('nextHadith').onclick=()=>{hi=(hi+1)%hs.length;render()};
+$('savePages').onclick=()=>{d.quran=$('pages').value.trim();persist()};
+$('saveReflection').onclick=()=>{d.reflection=$('reflection').value;persist();alert('تم حفظ الإجابة على هذا الجهاز.')};
+$('saveSettings').onclick=()=>{d.settings={sleep:$('sleep').value,wake:$('wake').value,work:$('work').value};persist();alert('تم حفظ الإعدادات.')};
+$('export').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));a.href=u;a.download='rifq-backup.json';a.click();URL.revokeObjectURL(u)};
+$('import').onchange=async e=>{try{let o=JSON.parse(await e.target.files[0].text());if(!o.tasks)throw 0;d=o;persist();alert('تم الاستيراد.')}catch(_){alert('ملف النسخة غير صالح.')}};
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$(b.dataset.page).classList.add('active')});
+function speak(t){if(!('speechSynthesis'in window)){alert('القراءة الصوتية غير مدعومة في هذا المتصفح.');return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';u.rate=.95;speechSynthesis.speak(u)}
+$('sayTasks').onclick=()=>{let pending=[...d.tasks,...d.extra].filter(x=>!x.done).map(x=>x.t);speak(pending.length?'المهام المتبقية: '+pending.join('، '):'أحسنت، أنجزت جميع مهامك المسجلة.')};
+$('stopVoice').onclick=()=>{if('speechSynthesis'in window)speechSynthesis.cancel()};
+function command(text){let s=text.toLowerCase();$('voiceText').textContent='سمعت: '+text;
+if(s.includes('عباد')||s.includes('قرآن')||s.includes('صلاة')){document.querySelector('[data-page="worshipPage"]').click();speak('فتحت قسم عبادتي');}
+else if(s.includes('تطوير')||s.includes('إنجليزي')||s.includes('إدارة')){document.querySelector('[data-page="growthPage"]').click();speak('فتحت قسم تطويري');}
+else if(s.includes('صحة')||s.includes('رياضة')||s.includes('تمرين')){document.querySelector('[data-page="healthPage"]').click();speak('فتحت قسم صحتي');}
+else if(s.includes('مهام')||s.includes('جدول')){let p=[...d.tasks,...d.extra].filter(x=>!x.done).map(x=>x.t);speak(p.length?'المهام المتبقية: '+p.join('، '):'لا توجد مهام متبقية مسجلة.')}
+else if(s.includes('قرأت القرآن')||s.includes('أنجزت القرآن')){let x=d.tasks.find(t=>t.id==='quran');if(x)x.done=true;d.quran='1.5';persist();speak('سجلت إنجاز ورد القرآن.')}
+else if(s.includes('حفظت الحديث')||s.includes('حفظ الحديث')){d.hadithDone=true;let x=d.tasks.find(t=>t.id==='hadith');if(x)x.done=true;persist();speak('سجلت حفظ حديث اليوم.')}
+else{speak('لم أفهم الأمر بعد. جرّب: ما مهامي، افتح عبادتي، أو سجل أني قرأت القرآن.')}
+}
+$('mic').onclick=()=>{let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$('voiceStatus').textContent='غير مدعوم';$('voiceText').textContent='ميزة التعرف على الكلام غير متاحة في هذا المتصفح. جرّب Chrome أو استخدم الأزرار.';return}let r=new SR();r.lang='ar-SA';r.interimResults=false;r.maxAlternatives=1;$('voiceStatus').textContent='أستمع…';r.onresult=e=>{let t=e.results[0][0].transcript;command(t);$('voiceStatus').textContent='تم'};r.onerror=()=>{$('voiceStatus').textContent='تعذر الاستماع';$('voiceText').textContent='تحقق من إذن الميكروفون والاتصال بالإنترنت.'};r.onend=()=>{if($('voiceStatus').textContent==='أستمع…')$('voiceStatus').textContent='جاهز'};r.start()};
+if(d.settings){$('sleep').value=d.settings.sleep||$('sleep').value;$('wake').value=d.settings.wake||$('wake').value;$('work').value=d.settings.work||$('work').value}
+render();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script></body></html>
